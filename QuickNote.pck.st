@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4689] on 4 August 2021 at 2:35:18 pm'!
+'From Cuis 5.0 [latest update: #4689] on 4 August 2021 at 4:01:59 pm'!
 'Description '!
-!provides: 'QuickNote' 1 5!
+!provides: 'QuickNote' 1 6!
 !requires: 'Cuis-Base' 50 4689 nil!
 !requires: 'StyledText' 1 52 nil!
 SystemOrganization addCategory: 'QuickNote'!
@@ -59,57 +59,15 @@ createQuickNoteCharacterStyleSet
 	
 	self triggerEvent: #stylesChanged! !
 
-!StyleSet methodsFor: '*QuickNote' stamp: 'NM 8/4/2021 11:10:52'!
+!StyleSet methodsFor: '*QuickNote' stamp: 'NM 8/4/2021 15:57:09'!
 createQuickNoteParagraphStyleSet
 	"Build one of the many possible sets of Styles. Maybe other methods like this will be added."
-	| heading1 heading2 heading3 emphasized normal numbered alphabetic bulleted smalltalkCode typeWriter  s familyName  
+	| smalltalkCode typeWriter  s familyName  
 	  s2 monoFamilyName  |
 
 	familyName _ FontFamily defaultFamilyName.
 	s _ FontFamily defaultPointSize.
 
-	normal _ self paragraphStyleNamedOrNew: 'Normal'.
-	normal privateFamilyName: familyName pointSize: s emphasis: 0 color: nil
-		alignment: CharacterScanner justifiedCode firstIndent: s*3 restIndent: s rightIndent: s
-		spaceBefore: s*8//10 spaceAfter: s*2//10.
-
-	emphasized _ self paragraphStyleNamedOrNew: 'Emphasized'.
-	emphasized privateFamilyName: familyName pointSize: s emphasis: AbstractFont boldCode color: nil
-		alignment: CharacterScanner justifiedCode firstIndent: s*6 restIndent: s*6 rightIndent: s*6
-		spaceBefore: s spaceAfter: s*2//10.
-
-	heading1 _ self paragraphStyleNamedOrNew: 'Heading 1'.
-	heading1 privateFamilyName: familyName pointSize: s*3 emphasis: 0 color: nil
-		alignment: CharacterScanner centeredCode firstIndent: 0 restIndent: 0 rightIndent: 0
-		spaceBefore: s*3 spaceAfter: s*2.
-
-	heading2 _ self paragraphStyleNamedOrNew: 'Heading 2'.
-	heading2 privateFamilyName: familyName pointSize: s*2 emphasis: AbstractFont boldCode color: nil
-		alignment: CharacterScanner centeredCode firstIndent: 0 restIndent: 0 rightIndent: 0
-		spaceBefore: s*2 spaceAfter: 2.
-
-	heading3 _ self paragraphStyleNamedOrNew: 'Heading 3'.
-	heading3 privateFamilyName: familyName pointSize: s*15//10 emphasis: AbstractFont italicCode color: nil
-		alignment: CharacterScanner centeredCode firstIndent: 0 restIndent: 0 rightIndent: 0
-		spaceBefore: s*15//10 spaceAfter: s//2.
-
-	numbered _ self paragraphStyleNamedOrNew: 'Numbered List'.
-	numbered privateFamilyName: familyName pointSize: s emphasis: 0 color: nil
-		alignment: CharacterScanner justifiedCode firstIndent: s restIndent: s*5 rightIndent: s
-		spaceBefore: s*8//10 spaceAfter: s*2//10;
-			privateListBulletPattern: '%%%. '.
-
-	alphabetic _ self paragraphStyleNamedOrNew: 'Alphabetic List'.
-	alphabetic privateFamilyName: familyName pointSize: s emphasis: 0 color: nil
-		alignment: CharacterScanner justifiedCode firstIndent: s restIndent: s*3 rightIndent: s
-		spaceBefore: s*8//10 spaceAfter: s*2//10;
-			privateListBulletPattern: 'z) '.
-
-	bulleted _ self paragraphStyleNamedOrNew: 'Bulleted List'.
-	bulleted privateFamilyName: familyName pointSize: s emphasis: 0 color: nil
-		alignment: CharacterScanner justifiedCode firstIndent: s restIndent: s*3 rightIndent: s
-		spaceBefore: s*8//10 spaceAfter: s*2//10;
-			privateListBulletPattern: '° '.
 
 	smalltalkCode _ self paragraphStyleNamedOrNew: 'Smalltalk code'.
 	smalltalkCode privateFamilyName: familyName pointSize: s emphasis: 0 color: nil
@@ -126,19 +84,19 @@ createQuickNoteParagraphStyleSet
 
 
 	paragraphStyles _ {
-		{$0.	normal}.
-		{$e.	emphasized}.
-		{$1.	heading1}.
-		{$2.	heading2}.
-		{$3.	heading3}.
-		{$4.	numbered}.
-		{$5.	alphabetic}.
-		{$6.	bulleted}.
+		{$0.	typeWriter}.
 		{$7.	smalltalkCode}.
-		{$8.	typeWriter}
 	}.
 	
 	self triggerEvent: #stylesChanged! !
+
+!StyleSet methodsFor: '*QuickNote' stamp: 'NM 8/4/2021 15:45:05'!
+defaultQuickNoteStyle
+	"Usually we include a 'Normal' style. If not, answer some style anyway.
+	We might refine this!!"
+	"^(self paragraphStyleNamed: 'Normal') ifNil: [ self paragraphStyleAt: 1 ] "
+	^(self paragraphStyleNamed: 'Typewriter') ifNil: [ self paragraphStyleAt: 1 ]
+	! !
 
 !StyleSet class methodsFor: '*QuickNote' stamp: 'NM 8/4/2021 11:12:55'!
 quickNote
