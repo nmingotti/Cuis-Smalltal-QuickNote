@@ -1,5 +1,7 @@
 # Cuis-Smalltalk-QuickNote
-Tool to take notes and, in particular, to write packages documentation
+Tool to take notes and in particular:
+1. To write packages documentation
+2. To copy snippets from/to the Wrokspace when we expect the system can boom!
 
 This is a work in progress. This package is the best way I could figure
 out to bend **StyledText** into my needs.
